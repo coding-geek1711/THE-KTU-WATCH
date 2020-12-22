@@ -10,4 +10,9 @@ It is written in NodeJS and uses the DiscordJS module for communicating with Dis
 
 All modules interacting with the Official page is written in such a way that it can repurposed for other applications too, say Telegram or Twilio BOTS.
 
+## NOTE:
+
+    - Tried to include the direct download links by scraping the href tags of anchor elements inside the notifications link, turns out a CDN is used causing the URL for link to be changed every time new GET request is sent, so hash will effectively change everytime, so couldnt include it.
+    - Workaround is being pondered over, feel free to contact me if u have any ideas abt it!!
+
 Enjoy!!

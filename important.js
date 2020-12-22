@@ -1,5 +1,6 @@
+
 const impContent = {
-    DISCORD_TOKEN:"TOKEN HERE",
+    DISCORD_TOKEN:"DISCORD_TOKEN",
     CHANNEL_ID:CHANNEL_ID_HERE
 }
 
