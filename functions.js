@@ -86,7 +86,7 @@ const logXML = async (functionToBeExecuted) => {
         functionToBeExecuted(arrayOfElements)
     });
   }
-
+  
 //   if(checkIfChanged(datahash)){
 //     fs.writeFile('hash.txt',datahash, (err) => {
 //         if(err) throw err
@@ -135,8 +135,21 @@ const getFirstTenObjects = (functionToBeExecuted) =>{
     })
 }
 
+const getFirstNObjects = (numberOfElements, functionToBeExecuted) =>{
+    fs.readFile('data.json', 'utf8', (err, data) => {
+        let arrayOfElements = JSON.parse(data)
+        let arrayToBeSent = []
+        for(let element in arrayOfElements){
+            if (element < numberOfElements){
+                arrayToBeSent.push(arrayOfElements[element])
+            }
+        }
+        functionToBeExecuted(arrayToBeSent)
+    })
+}
+
 // checkByDetails("Aug","2020" )
-module.exports = {sendIntervalNotification, checkByDetails, getFirstTenObjects}
+module.exports = {sendIntervalNotification, checkByDetails, getFirstTenObjects, getFirstNObjects}
 
 // setTimeout(() => {
 //     checkByDetails("Aug", "2020")

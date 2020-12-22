@@ -3,7 +3,7 @@ require("dotenv").config()
 const {DISCORD_TOKEN, CHANNEL_ID} = require("./important")
 const {Client} = require("discord.js")
 const client = new Client()
-const {sendIntervalNotification, checkByDetails, getFirstTenObjects} = require("./functions")
+const {sendIntervalNotification, checkByDetails, getFirstTenObjects, getFirstNObjects} = require("./functions")
 
 const checkContinously = () => {
     const functionToBeExecuted = (arrayOfElements) => {
@@ -38,15 +38,15 @@ checkContinously()
 
 
 client.on('message', (message) => {
-    if(message.content === `${prefix}server`){
-        message.channel.send(`Servers name is ${message.guild.name}`)
+    if(message.content === `${prefix}status`){
+        message.channel.send(`Servers name is ${message.guild.name} and BOT ${client.user.username} is active`)
     }
 })
 
 
 client.on('message', (message) => {
     if(message.content === `${prefix}help`){
-        const content = "```" + `My Commands are: \n 1. n!notification \n 2. n!notification <month> <year>` + "```"
+        const content = "```" + `My Commands are: \n 1. n!notification \n 2. n!notification calender <month> <year>\n 3. n!notification number <number of notifications you want>\n 4. n!status\n 5. n!help` + "```"
         message.channel.send(content)
     }
 })
@@ -72,16 +72,39 @@ client.on('message', (message) => {
     }
 })
 
+
 client.on('message', (message) => {
     if(!message.content.startsWith(prefix) || message.author.bot) return ;
     const args = message.content.slice(prefix.length).trim().split(' ')
     const command = args.shift().toLowerCase()
-    const functionToBeExecuted = (obj) => {
-        obj.forEach(object => {
-            console.log(object)
-            message.channel.send({embed:object})
-        })
+
+    if(args[0] == "number"){
+        var numberOfNotification = parseInt(args[1], 10)
+        const functionToBeExecuted = (arrayOfElements) => {
+            console.log(arrayOfElements.length)
+            arrayOfElements.forEach(object => {
+                const sentence = {
+                    title:`***${object.date} ${object.month} ${object.year}***`,
+                    url:`https://ktu.edu.in/${object.link}`,
+                    description:"```" + object.notification +"```"
+                }
+
+                message.channel.send({embed:sentence})
+                // console.log(sentence);
+            })
+        }
+        getFirstNObjects(numberOfNotification, functionToBeExecuted)
+
+    } else if(args[0] == "calender"){
+        const functionToBeExecuted = (obj) => {
+            obj.forEach(object => {
+                console.log(object)
+                message.channel.send({embed:object})
+            })
+        }
+        const month = args[1]
+        const year = args[2]
+        checkByDetails(month, year, functionToBeExecuted)
     }
-    checkByDetails(args[0], args[1], functionToBeExecuted)
 })
 
