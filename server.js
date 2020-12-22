@@ -7,7 +7,7 @@ const {sendIntervalNotification, checkByDetails, getFirstTenObjects} = require("
 const checkContinously = () => {
     const functionToBeExecuted = (arrayOfElements) => {
         console.log(`Sending message`)
-        var channel1 = client.channels.cache.get("710711319959044149")
+        var channel1 = client.channels.cache.get(process.env.CHANNEL_ID)
         let arrayToBeSent = []
         for(let element in arrayOfElements){
             if (element < 5){
