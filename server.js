@@ -1,5 +1,6 @@
 require("dotenv").config()
 
+const {DISCORD_TOKEN, CHANNEL_ID} = require("./important")
 const {Client} = require("discord.js")
 const client = new Client()
 const {sendIntervalNotification, checkByDetails, getFirstTenObjects} = require("./functions")
@@ -7,7 +8,7 @@ const {sendIntervalNotification, checkByDetails, getFirstTenObjects} = require("
 const checkContinously = () => {
     const functionToBeExecuted = (arrayOfElements) => {
         console.log(`Sending message`)
-        var channel1 = client.channels.cache.get(process.env.CHANNEL_ID)
+        var channel1 = client.channels.cache.get(CHANNEL_ID)
         let arrayToBeSent = []
         for(let element in arrayOfElements){
             if (element < 5){
@@ -26,8 +27,8 @@ const checkContinously = () => {
     }
     sendIntervalNotification(functionToBeExecuted)
 }
-const prefix = "!"
-client.login(process.env.DISCORD_TOKEN)
+const prefix = "n!"
+client.login(DISCORD_TOKEN)
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.username}`);
@@ -41,6 +42,15 @@ client.on('message', (message) => {
         message.channel.send(`Servers name is ${message.guild.name}`)
     }
 })
+
+
+client.on('message', (message) => {
+    if(message.content === `${prefix}help`){
+        const content = "```" + `My Commands are: \n 1. n!notification \n 2. n!notification <month> <year>` + "```"
+        message.channel.send(content)
+    }
+})
+
 
 client.on('message', (message) => {
     if(message.content === `${prefix}notification`){

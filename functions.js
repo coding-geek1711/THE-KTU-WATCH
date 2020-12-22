@@ -3,7 +3,7 @@ const { JSDOM } = require("jsdom");
 const fs = require("fs")
 const objhash = require("object-hash")
 
-const TIME_INTERVAL = 1000 * 40;
+const TIME_INTERVAL = 1000 * 60 * 5;
 const URL = "https://ktu.edu.in/eu/core/announcements.htm";
 // const URL = "https://www.google.com/"
 
@@ -110,9 +110,9 @@ const sendIntervalNotification = async (functionToBeExecuted) => {
     setInterval(loopingFunction, TIME_INTERVAL)
 }
 
-const functionToBeExecuted = (data) => console.log(`Hello`);
+// const functionToBeExecuted = (data) => console.log(`Hello`);
 
-sendIntervalNotification(functionToBeExecuted)
+// sendIntervalNotification(functionToBeExecuted)
 
 const checkByDetails = async (month, year, functionToBeExecuted) => {
     fs.readFile('data.json', 'utf8', (err, data) => {
@@ -136,7 +136,7 @@ const getFirstTenObjects = (functionToBeExecuted) =>{
 }
 
 // checkByDetails("Aug","2020" )
-// module.exports = {sendIntervalNotification, checkByDetails, getFirstTenObjects}
+module.exports = {sendIntervalNotification, checkByDetails, getFirstTenObjects}
 
 // setTimeout(() => {
 //     checkByDetails("Aug", "2020")
